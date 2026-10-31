@@ -36,9 +36,9 @@ func (f *fixture) proj(name string) string { return filepath.Join(f.home, "proj"
 // checkout beside it), committed at 19:00.
 func (f *fixture) libs() {
 	f.t.Helper()
-	f.write(filepath.Join(f.proj("oden"), "go.mod"), "module github.com/unixsuperhero/oden\n\ngo 1.26.0\n")
+	f.write(filepath.Join(f.proj("oden"), "go.mod"), "module ofam.dev/oden\n\ngo 1.26.0\n")
 	commitAll(f.t, f.proj("oden"), "feat: oden", "2026-10-24T19:00:00Z")
-	f.write(filepath.Join(f.proj("ochazuke"), "go.mod"), "module github.com/unixsuperhero/ochazuke\n\ngo 1.26.0\n\nrequire (\n\tgithub.com/unixsuperhero/oden v0.0.0-00010101000000-000000000000\n\tgolang.org/x/sys v0.47.0 // indirect\n)\n\nreplace github.com/unixsuperhero/oden => ../oden\n")
+	f.write(filepath.Join(f.proj("ochazuke"), "go.mod"), "module ofam.dev/ochazuke\n\ngo 1.26.0\n\nrequire (\n\tofam.dev/oden v0.0.0-00010101000000-000000000000\n\tgolang.org/x/sys v0.47.0 // indirect\n)\n\nreplace ofam.dev/oden => ../oden\n")
 	commitAll(f.t, f.proj("ochazuke"), "feat: ochazuke", "2026-10-24T19:00:00Z")
 }
 
@@ -59,7 +59,7 @@ func (f *fixture) consumer(built time.Time) {
 	if err := os.Chtimes(filepath.Join(f.bin, "o-cons"), built, built); err != nil {
 		f.t.Fatal(err)
 	}
-	f.write(filepath.Join(f.proj("o-cons"), "go.mod"), "module example.com/o-cons\n\ngo 1.26.0\n\nrequire github.com/unixsuperhero/oden v0.0.0-00010101000000-000000000000\nrequire github.com/unixsuperhero/ochazuke v0.3.0\n\nreplace github.com/unixsuperhero/oden => "+f.proj("oden")+"\n")
+	f.write(filepath.Join(f.proj("o-cons"), "go.mod"), "module example.com/o-cons\n\ngo 1.26.0\n\nrequire ofam.dev/oden v0.0.0-00010101000000-000000000000\nrequire ofam.dev/ochazuke v0.3.0\n\nreplace ofam.dev/oden => "+f.proj("oden")+"\n")
 }
 
 // root installs a fake o answering catalog (oden's command noun) and
@@ -137,10 +137,10 @@ func TestSnapshotRecordsRootLibsDepsAndReachability(t *testing.T) {
 		t.Fatalf("shadow %v (ids %v)", r, ids(f.latest()))
 	}
 	oden := m["lib:oden"]
-	if oden.Str("path") != "~/proj/oden" || len(oden.Str("commit")) != 7 || oden["dirty"] != false || oden.Str("version") != oden.Str("commit") || oden.Str("goModule") != "github.com/unixsuperhero/oden" {
+	if oden.Str("path") != "~/proj/oden" || len(oden.Str("commit")) != 7 || oden["dirty"] != false || oden.Str("version") != oden.Str("commit") || oden.Str("goModule") != "ofam.dev/oden" {
 		t.Fatalf("lib oden %v", oden)
 	}
-	if r := m["lib:ochazuke"]; r.Str("goModule") != "github.com/unixsuperhero/ochazuke" {
+	if r := m["lib:ochazuke"]; r.Str("goModule") != "ofam.dev/ochazuke" {
 		t.Fatalf("lib ochazuke %v", r)
 	}
 	for id, want := range map[string]string{

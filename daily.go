@@ -16,7 +16,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/unixsuperhero/ochazuke"
+	"ofam.dev/ochazuke"
 )
 
 // The daily job: a launchd agent in the gui/UID domain that runs a

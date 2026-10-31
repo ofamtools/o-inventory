@@ -4,22 +4,22 @@
     <img alt="o-inventory" src="assets/logo-light.svg" width="414">
   </picture>
   <br>
-  <a href="go.mod"><img alt="Go version" src="https://img.shields.io/github/go-mod/go-version/unixsuperhero/o-inventory"></a>
-  <a href="LICENSE"><img alt="License" src="https://img.shields.io/github/license/unixsuperhero/o-inventory"></a>
+  <a href="go.mod"><img alt="Go version" src="https://img.shields.io/github/go-mod/go-version/ofamtools/o-inventory"></a>
+  <a href="LICENSE"><img alt="License" src="https://img.shields.io/github/license/ofamtools/o-inventory"></a>
 </p>
 
 <p align="center">The family's derived inventory and changelog: every tool's nouns, verbs and keys, snapshotted when they change, and CHANGELOGs rendered from the diffs, never written by hand.</p>
 
 <p align="center"><img alt="o-inventory over a throwaway hub: a snapshot, a new build of an invented tool, the diff, the changelog entry it renders, the hub's commits and the verb table" src="assets/demo.gif" width="720"></p>
 
-o-inventory (`o inv` and `o inventory` under [oden](https://github.com/unixsuperhero/oden)'s `o`) reads every `o-*` tool on PATH (and `mtm`) through its `catalog`, nabe's registry, `o-proj list` and the hub links, and writes one JSON Lines snapshot per change to `~/hub/inventory/<UTC stamp>.jsonl` (plus `latest.jsonl`). The changelog is rendered from those snapshots, never written by hand. It is an oden app with an [ochazuke](https://github.com/unixsuperhero/ochazuke) runtime behind `ochazuke/cli`, so every row kind is also a noun you can list and show.
+o-inventory (`o inv` and `o inventory` under [oden](https://github.com/ofamtools/oden)'s `o`) reads every `o-*` tool on PATH (and `mtm`) through its `catalog`, nabe's registry, `o-proj list` and the hub links, and writes one JSON Lines snapshot per change to `~/hub/inventory/<UTC stamp>.jsonl` (plus `latest.jsonl`). The changelog is rendered from those snapshots, never written by hand. It is an oden app with an [ochazuke](https://github.com/ofamtools/ochazuke) runtime behind `ochazuke/cli`, so every row kind is also a noun you can list and show.
 
 ## Install
 
-Module `github.com/unixsuperhero/o-inventory`; requires Go 1.26 or newer.
+Module `ofam.dev/o-inventory`; requires Go 1.26 or newer.
 
 ```sh
-go install github.com/unixsuperhero/o-inventory@latest
+go install ofam.dev/o-inventory@latest
 ```
 
 or, from a checkout:

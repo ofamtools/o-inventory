@@ -5,7 +5,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/unixsuperhero/ochazuke"
+	"ofam.dev/ochazuke"
 )
 
 // Tables: every row noun declares its columns on the runtime noun (the

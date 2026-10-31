@@ -1,10 +1,10 @@
-module github.com/unixsuperhero/o-inventory
+module ofam.dev/o-inventory
 
 go 1.26.0
 
 require (
-	github.com/unixsuperhero/ochazuke v0.16.0
-	github.com/unixsuperhero/oden v0.1.1
+	ofam.dev/ochazuke v0.16.0
+	ofam.dev/oden v0.1.1
 )
 
 require (

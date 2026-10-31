@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/unixsuperhero/oden"
+	"ofam.dev/oden"
 )
 
 // flags are a command's parsed words: booleans and valued options by name
