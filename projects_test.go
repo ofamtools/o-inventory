@@ -12,7 +12,7 @@ import (
 // resolves to the project's tree, and a link with no store row is no project.
 func TestProjectsOnlyFromStoreWithResolvedHubLinks(t *testing.T) {
 	f := newFixture(t)
-	hub := filepath.Join(f.home, "elsewhere", "o") // $O_PROJ_HUB, not ~/hub/o
+	hub := filepath.Join(f.home, "elsewhere", "o") // $O_PROJ_HUB, not $HOME/hub/o
 	proj := func(name string) string { return filepath.Join(f.home, "proj", name) }
 	for _, d := range []string{hub, proj("right"), proj("wrong"), proj("other"), proj("missing"), proj("lib")} {
 		if err := os.MkdirAll(d, 0o755); err != nil {

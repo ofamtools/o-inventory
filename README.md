@@ -12,7 +12,7 @@
 
 <p align="center"><img alt="o-inventory over a throwaway hub: a snapshot, a new build of an invented tool, the diff, the changelog entry it renders, the hub's commits and the verb table" src="assets/demo.gif" width="720"></p>
 
-o-inventory (`o inv` and `o inventory` under [oden](https://github.com/ofamtools/oden)'s `o`) reads every `o-*` tool on PATH (and `mtm`) through its `catalog`, nabe's registry, `o-proj list` and the hub links, and writes one JSON Lines snapshot per change to `~/hub/inventory/<UTC stamp>.jsonl` (plus `latest.jsonl`). The changelog is rendered from those snapshots, never written by hand. It is an oden app with an [ochazuke](https://github.com/ofamtools/ochazuke) runtime behind `ochazuke/cli`, so every row kind is also a noun you can list and show.
+o-inventory (`o inv` and `o inventory` under [oden](https://github.com/ofamtools/oden)'s `o`) reads every `o-*` tool on PATH (and `mtm`) through its `catalog`, nabe's registry, `o-proj list` and the hub links, and writes one JSON Lines snapshot per change to `$HOME/hub/inventory/<UTC stamp>.jsonl` (plus `latest.jsonl`). The changelog is rendered from those snapshots, never written by hand. It is an oden app with an [ochazuke](https://github.com/ofamtools/ochazuke) runtime behind `ochazuke/cli`, so every row kind is also a noun you can list and show.
 
 ## Install
 
@@ -41,17 +41,17 @@ o inv overview [--json]                 # the latest snapshot as one tree: libs,
 o inv hook install [REPO|--all]         # post-commit hook in family repos
 o inv daily plist|install|uninstall|status|run   # the launchd job (below)
 o inv errors [--md P] [--jsonl P] ROOT [PATTERN...]  # a Go module's error sites (Markdown on stdout unless --md)
-o inv repos                             # o proj's manifest (~/hub/repos.json) merged with ~/.config/o-inventory/repos.json
+o inv repos                             # o proj's manifest ($HOME/hub/repos.json) merged with ~/.config/o-inventory/repos.json
 o inv tool list | o inv verb show --target verb:o-ai/skill.list | o inv state
 o inv story list | o inv edge list | o inv table list   # also lib, dep, noun, binding, page, host, project, change
 ```
 
-The demo above, as text. Two invented tools, `o-tea` and `o-miso`, are on PATH; a new build of `o-tea` drops `leaf.show` and adds `leaf.steep` with a key:
+The demo above, as text, with hub paths shown using `$HOME`. Two invented tools, `o-tea` and `o-miso`, are on PATH; a new build of `o-tea` drops `leaf.show` and adds `leaf.steep` with a key:
 
 ```console
 $ o-inventory snapshot --commit
-wrote ~/hub/inventory/20261028T021408Z.jsonl: 15 rows, 15 changes
-committed in ~/hub: inventory: 20261028T021408Z (15 changes)
+wrote $HOME/hub/inventory/20261028T021408Z.jsonl: 15 rows, 15 changes
+committed in $HOME/hub: inventory: 20261028T021408Z (15 changes)
 $ o-inventory overview
 libs (0)
 root (0)
@@ -62,8 +62,8 @@ hosts (0)
 projects (0)
 $ cp ~/o-tea-0.2.0 ~/bin/o-tea
 $ o-inventory snapshot --commit
-wrote ~/hub/inventory/20261028T021409Z.jsonl: 17 rows, 5 changes
-committed in ~/hub: inventory: 20261028T021409Z (5 changes)
+wrote $HOME/hub/inventory/20261028T021409Z.jsonl: 17 rows, 5 changes
+committed in $HOME/hub: inventory: 20261028T021409Z (5 changes)
 $ o-inventory diff
 + binding:o-tea/normal/leaf/t
 + param:o-tea/leaf.steep/minutes
@@ -71,9 +71,9 @@ $ o-inventory diff
 - verb:o-tea/leaf.show
 + verb:o-tea/leaf.steep
 $ o-inventory changelog --commit
-~/hub/CHANGELOG.md: 2 entries, 2 new
-committed in ~/hub: changelog: 20261028T021409Z
-$ sed -n 5,15p ~/hub/CHANGELOG.md
+$HOME/hub/CHANGELOG.md: 2 entries, 2 new
+committed in $HOME/hub: changelog: 20261028T021409Z
+$ sed -n 5,15p $HOME/hub/CHANGELOG.md
 ## 2026-10-28 02:14:09
 
 ### Tools
@@ -121,16 +121,16 @@ Framework nouns are recorded once under `ochazuke`.
 
 **The changelog.** One entry per snapshot, newest first, with only the concepts that changed: Root and libraries, Tools, Nouns and verbs, Keybindings, Pages, Hosts, Projects, Stories and mode edges, Store, and last Commits, which comes from git rather than the diff. Every line starts with `added:`, `changed:` (with `; was`), `removed:`, `fixed:` (only from `fix:` commit subjects) or `shadow:` (a claim an `o` command newly shadows).
 
-**Read-only.** o-inventory never writes to a tool, a registry or a store. It writes only `~/hub/inventory/`, `~/hub/CHANGELOG.md`, each repo's `CHANGELOG.md` (with `--write-repos`, never committed), its hook block, `repos.json`, and the daily job's plist, wrapper and logs, and it commits only in the hub. `$O_INV_HUB` moves the hub from `~/hub`.
+**Read-only.** o-inventory never writes to a tool, a registry or a store. It writes only `$HOME/hub/inventory/`, `$HOME/hub/CHANGELOG.md`, each repo's `CHANGELOG.md` (with `--write-repos`, never committed), its hook block, `repos.json`, and the daily job's plist, wrapper and logs, and it commits only in the hub. `$O_INV_HUB` moves the hub from `$HOME/hub`.
 
 ## In the family
 
 - **The o-\* tools and mtm** are what it inventories: each answers `catalog`, and a wrong fact is fixed in the tool that reports it, never here. **ochazuke**'s framework nouns, shared by every tool built on it, are recorded once under `ochazuke`.
-- **The CHANGELOGs.** `changelog` merges every entry into `~/hub/CHANGELOG.md`. `changelog --write-repos` also writes each family repo's `CHANGELOG.md` with the lines about that repo (its tool's nouns, verbs, keys and pages; ochazuke for the framework's; o-story's for stories and edges) and that repo's own commits, and leaves the file uncommitted for review; `--repo X` prints one repo's. Those files are generated: fix a wrong line in its source, not in the file.
+- **The CHANGELOGs.** `changelog` merges every entry into `$HOME/hub/CHANGELOG.md`. `changelog --write-repos` also writes each family repo's `CHANGELOG.md` with the lines about that repo (its tool's nouns, verbs, keys and pages; ochazuke for the framework's; o-story's for stories and edges) and that repo's own commits, and leaves the file uncommitted for review; `--repo X` prints one repo's. Those files are generated: fix a wrong line in its source, not in the file.
 - **o-proj.** `o proj new` installs this tool's post-commit hook in a new repository (when o-inventory is on PATH); the hook snapshots after a commit touching `*.go`, `go.mod`, `stories/` or a catalog golden. `o inv hook install REPO|--all` adds it by hand. Projects are `o-proj list`'s rows (manifest entries; `dir` is the path).
 - **nabe** hosts are read from nabe's registry (`$XDG_DATA_HOME/nabe/catalogs`), and `check` reports stale or missing ones.
 
-Repositories: o proj's manifest (`~/hub/repos.json`, `$O_PROJ_MANIFEST`) is read first and merged by name with `~/.config/o-inventory/repos.json`, which keeps `roots` and the directories `hook install` adds and is the only repos file written here; without a manifest the repos.json alone is used.
+Repositories: o proj's manifest (`$HOME/hub/repos.json`, `$O_PROJ_MANIFEST`) is read first and merged by name with `~/.config/o-inventory/repos.json`, which keeps `roots` and the directories `hook install` adds and is the only repos file written here; without a manifest the repos.json alone is used.
 
 ## Daily job
 

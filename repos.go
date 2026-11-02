@@ -73,7 +73,7 @@ func (t *Tool) knownRepos() ([]Repo, error) {
 }
 
 // ManifestPath is o proj's manifest: $O_PROJ_MANIFEST, else
-// ~/hub/repos.json (o-proj ManifestPath).
+// $HOME/hub/repos.json (o-proj ManifestPath).
 func (t *Tool) ManifestPath() string {
 	if v := t.getenv("O_PROJ_MANIFEST"); v != "" {
 		return t.untilde(v)

@@ -1,10 +1,10 @@
 # o-inventory: agent guide
 
-The family's derived inventory and changelog (`o-inventory`, so `o inv` and `o inventory`). An oden app with an ochazuke runtime behind `ochazuke/cli`. Design: `~/hub/o-plans/plans/inventory.md`. Every fact is read from a source that must already be right (a tool's `catalog`, nabe's registry, `o-proj list`, the hub's `o/` links, `git log`); nothing is hand-written. A wrong fact is fixed in its tool.
+The family's derived inventory and changelog (`o-inventory`, so `o inv` and `o inventory`). An oden app with an ochazuke runtime behind `ochazuke/cli`. Every fact is read from a source that must already be right (a tool's `catalog`, nabe's registry, `o-proj list`, the hub's `o/` links, `git log`); nothing is hand-written. A wrong fact is fixed in its tool.
 
 ## Plans and todos
 
-Family plans, todos and the roadmap live in `~/hub/o-plans/` (`README.md` is the index). Read it before planning work; add or update items there. Do not add a TODO.md or docs/plans/ to this repo.
+Keep planning work in the family planning workspace, separate from this repository. Do not add a TODO.md or docs/plans/ to this repo.
 
 ## Where does X live
 
@@ -29,7 +29,7 @@ Family plans, todos and the roadmap live in `~/hub/o-plans/` (`README.md` is the
 
 ## Invariants
 
-- Read-only toward every tool, registry and store; writes only `~/hub/inventory/`, `~/hub/CHANGELOG.md`, each repo's `CHANGELOG.md` (`--write-repos`, never committed), its hook block, `repos.json`, and the daily job's plist, wrapper and logs. Commits only in the hub.
+- Read-only toward every tool, registry and store; writes only `$HOME/hub/inventory/`, `$HOME/hub/CHANGELOG.md`, each repo's `CHANGELOG.md` (`--write-repos`, never committed), its hook block, `repos.json`, and the daily job's plist, wrapper and logs. Commits only in the hub.
 - Tests never touch the real LaunchAgents or launchctl: a temp HOME and fake `launchctl`/`plutil` on a temp PATH.
 - A snapshot is written only when a compared field differs from `latest.jsonl`; ignored fields (registeredAt, binMtime, descriptions) never make one.
 - Changelog lines start with `added:`/`changed:`/`removed:`/`fixed:`/`shadow:` (a claim an `o` command newly shadows); a `changed:` line has `; was`; `fixed:` only from `fix:` commit subjects. `TestChangelogEntryGrammarAndRepoFiles` pins it.

@@ -182,7 +182,7 @@ func (p Project) tree() string {
 }
 
 // HubLinkDir is the directory o-proj links projects from (o-proj
-// DefaultHub): $O_PROJ_HUB, else ~/hub/o.
+// DefaultHub): $O_PROJ_HUB, else $HOME/hub/o.
 func (t *Tool) HubLinkDir() string {
 	if v := t.getenv("O_PROJ_HUB"); v != "" {
 		return v

@@ -689,7 +689,7 @@ type ChangelogOptions struct {
 	Quiet      bool
 }
 
-// Changelog writes ~/hub/CHANGELOG.md (merging new entries), or prints one
+// Changelog writes $HOME/hub/CHANGELOG.md (merging new entries), or prints one
 // repo's entries with Repo; WriteRepos also merges each family repo's
 // entries into its CHANGELOG.md (only repos with entries; created when
 // missing), which it never commits: they are left for the owner to

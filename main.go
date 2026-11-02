@@ -1,7 +1,7 @@
 // Command o-inventory is the family's derived inventory and changelog: it
 // reads every o-* tool on PATH (and mtm) through its catalog answer, nabe's
 // registry, o-proj's store and the hub links, and writes one JSON Lines
-// snapshot per change under ~/hub/inventory. Nothing in it is hand-written:
+// snapshot per change under $HOME/hub/inventory. Nothing in it is hand-written:
 // a wrong fact is fixed in the tool it came from.
 //
 //	o-inventory snapshot [--commit] [--quiet]     collect; write a snapshot when it differs
@@ -105,7 +105,7 @@ func (t *Tool) now() time.Time {
 	return t.Now()
 }
 
-// Hub is the hub repository: $O_INV_HUB, else ~/hub.
+// Hub is the hub repository: $O_INV_HUB, else $HOME/hub.
 func (t *Tool) Hub() string {
 	if v := t.getenv("O_INV_HUB"); v != "" {
 		return v

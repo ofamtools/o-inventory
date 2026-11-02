@@ -3,7 +3,7 @@
 # DIR for the README demo: HOME, the XDG directories, a hub that is a fresh
 # git repository, and two invented family tools on PATH (o-tea and o-miso,
 # shell scripts that answer `catalog`). Nothing reads or writes your own
-# ~/hub, nabe registry or tools. It writes DIR/env, which points HOME, the
+# hub, nabe registry or tools. It writes DIR/env, which points HOME, the
 # XDG directories, O_INV_HUB and PATH inside DIR and defines an o-inventory
 # function bound to the build.
 #

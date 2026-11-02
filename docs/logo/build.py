@@ -1,9 +1,8 @@
 #!/usr/bin/env python3
 """Write assets/icon.svg, assets/logo-light.svg and assets/logo-dark.svg.
 
-Adapted from the o-family icon concepts (~/hub/o-plans/icons/build.py,
-concept o-inventory-3, the diff glyph). The set and its geometry match
-ochazuke's and matomeru's assets/:
+The mark is a diff glyph, adapted from the o-family icon concepts. The set
+and its geometry match ochazuke's and matomeru's assets/:
 
 - icon.svg: a 128x128 tile (rx 28) in a dark tint of the tool's hue, the
   mark centred on it, in the dark palette.

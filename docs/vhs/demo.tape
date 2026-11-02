@@ -3,7 +3,7 @@
 #
 # seed.sh builds o-inventory and makes everything under a fresh /tmp/oinv.XXXX:
 # HOME, XDG dirs, a git hub and the fake tools o-tea and o-miso on PATH. The
-# recording never reads or writes your own ~/hub, nabe registry or tools.
+# recording never reads or writes your own hub, nabe registry or tools.
 
 Output assets/demo.gif
 
