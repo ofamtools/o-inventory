@@ -1,0 +1,126 @@
+# namecheck baseline: file, function, kind, literal, count, reason (tab separated).
+# A row with a reason is a legitimate use that stays. A row without one is debt that may only shrink:
+# NAMECHECK_UPDATE=1 removes rows and lowers counts, never adds them. Adding a row is a reviewed edit.
+changelog.go	Tool.newView	compare	"tool"	1
+changelog.go	view.addedText	case	"binding"	1
+changelog.go	view.addedText	case	"dep"	1
+changelog.go	view.addedText	case	"host"	1
+changelog.go	view.addedText	case	"lib"	1
+changelog.go	view.addedText	case	"noun"	1
+changelog.go	view.addedText	case	"page"	1
+changelog.go	view.addedText	case	"project"	1
+changelog.go	view.addedText	case	"story"	1
+changelog.go	view.addedText	case	"table"	1
+changelog.go	view.addedText	case	"tool"	1
+changelog.go	view.addedText	case	"verb"	1
+changelog.go	view.addedText	cyclo	"-"	32
+changelog.go	view.changedText	compare	"binding"	1
+changelog.go	view.changedText	compare	"request"	1
+changelog.go	view.changedText	compare	"story"	1
+changelog.go	view.fold	case	"binding"	2
+changelog.go	view.fold	case	"noun"	2
+changelog.go	view.fold	case	"page"	1
+changelog.go	view.fold	case	"tool"	1
+changelog.go	view.fold	case	"verb"	3
+changelog.go	view.foldTables	compare	"binding"	2
+changelog.go	view.lines	compare	"commit"	1
+changelog.go	view.lines	compare	"lib"	1
+changelog.go	view.removedText	case	"noun"	1
+changelog.go	view.removedText	case	"tool"	1
+changelog.go	view.removedText	case	"verb"	1
+changelog.go	view.repoOf	case	"dep"	1
+changelog.go	view.repoOf	case	"edge"	1
+changelog.go	view.repoOf	case	"host"	1
+changelog.go	view.repoOf	case	"lib"	1
+changelog.go	view.repoOf	case	"project"	1
+changelog.go	view.repoOf	case	"story"	1
+changelog.go	view.repoOf	case	"tool"	1
+changelog.go	view.repoOf	compare	"lib"	1
+changelog.go	view.repoOf	compare	"tool"	1
+changelog.go	view.thing	case	"binding"	1
+changelog.go	view.thing	case	"dep"	1
+changelog.go	view.thing	case	"edge"	1
+changelog.go	view.thing	case	"host"	1
+changelog.go	view.thing	case	"lib"	1
+changelog.go	view.thing	case	"noun"	1
+changelog.go	view.thing	case	"page"	1
+changelog.go	view.thing	case	"project"	1
+changelog.go	view.thing	case	"story"	1
+changelog.go	view.thing	case	"table"	1
+changelog.go	view.thing	case	"tool"	1
+changelog.go	view.thing	case	"verb"	1
+check.go	Tool.Problems	case	"host"	1
+check.go	Tool.Problems	case	"project"	1
+check.go	Tool.Problems	compare	"tool"	1
+check.go	staleBuilds	case	"lib"	1
+check.go	staleBuilds	case	"tool"	1
+check.go	staleBuilds	compare	"dep"	1
+check.go	staleBuilds	compare	"replace"	1
+check.go	staleBuilds	compare	"tool"	1
+collect.go	Tool.Collect	cyclo	"-"	33
+collect.go	storyRows	compare	"edge"	1
+collect.go	storyRows	compare	"story"	2
+daily.go	Tool.Daily	case	"install"	1
+daily.go	Tool.Daily	case	"plist"	1
+daily.go	Tool.Daily	case	"run"	1
+daily.go	Tool.Daily	case	"status"	1
+daily.go	Tool.Daily	case	"uninstall"	1
+daily.go	printSummary	case	"state"	1
+diff.go	var compared	table	"binding"	1
+diff.go	var compared	table	"dep"	1
+diff.go	var compared	table	"edge"	1
+diff.go	var compared	table	"host"	1
+diff.go	var compared	table	"lib"	1
+diff.go	var compared	table	"noun"	1
+diff.go	var compared	table	"page"	1
+diff.go	var compared	table	"project"	1
+diff.go	var compared	table	"story"	1
+diff.go	var compared	table	"table"	1
+diff.go	var compared	table	"tool"	1
+diff.go	var compared	table	"verb"	1
+diff.go	var neverCompared	table	"id"	1
+diff.go	var neverCompared	table	"kind"	1
+errmap.go	emReport.WriteMarkdown	cyclo	"-"	48
+errmap.go	emScan.callSite	cyclo	"-"	26
+errmap.go	emScan.finish	compare	"status"	1
+errmap.go	emScan.passBuilders	cyclo	"-"	29
+errmap.go	emScan.passSites	cyclo	"-"	28
+hook.go	Tool.HookCommand	compare	"install"	1
+libs.go	Tool.libRows	cyclo	"-"	31
+libs.go	goMod.line	case	"replace"	1
+libs.go	readGoMod	compare	"replace"	2
+overview.go	Tool.overviewOf	compare	"noun"	1
+overview.go	Tool.overviewOf	cyclo	"-"	31
+shell.go	Tool.shell	compare	"plist"	1
+shell.go	Tool.shell	compare	"run"	4
+shell.go	Tool.shell	cyclo	"-"	43
+shell.go	label	case	"binding"	1
+shell.go	label	case	"change"	1
+shell.go	label	case	"dep"	1
+shell.go	label	case	"edge"	1
+shell.go	label	case	"host"	1
+shell.go	label	case	"lib"	1
+shell.go	label	case	"noun"	1
+shell.go	label	case	"page"	1
+shell.go	label	case	"project"	1
+shell.go	label	case	"run"	1
+shell.go	label	case	"story"	1
+shell.go	label	case	"table"	1
+shell.go	label	case	"tool"	1
+shell.go	label	case	"verb"	1
+shell.go	label	cyclo	"-"	30
+table.go	var tables	cyclo	"-"	27
+table.go	var tables	table	"binding"	1
+table.go	var tables	table	"change"	1
+table.go	var tables	table	"dep"	1
+table.go	var tables	table	"edge"	1
+table.go	var tables	table	"host"	1
+table.go	var tables	table	"lib"	1
+table.go	var tables	table	"noun"	1
+table.go	var tables	table	"page"	1
+table.go	var tables	table	"project"	1
+table.go	var tables	table	"run"	1
+table.go	var tables	table	"story"	1
+table.go	var tables	table	"table"	1
+table.go	var tables	table	"tool"	1
+table.go	var tables	table	"verb"	1
