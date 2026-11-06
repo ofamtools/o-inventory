@@ -88,7 +88,9 @@ errmap.go	emScan.passSites	cyclo	"-"	28
 hook.go	Tool.HookCommand	compare	"install"	1
 libs.go	Tool.libRows	cyclo	"-"	31
 libs.go	goMod.line	case	"replace"	1
+libs.go	goMod.line	case	"require"	1	go.mod directive keyword, not the confirm.require verb
 libs.go	readGoMod	compare	"replace"	2
+libs.go	readGoMod	compare	"require"	2	go.mod directive keyword, not the confirm.require verb
 overview.go	Tool.overviewOf	compare	"noun"	1
 overview.go	Tool.overviewOf	cyclo	"-"	31
 shell.go	Tool.shell	compare	"plist"	1
