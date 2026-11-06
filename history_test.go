@@ -33,7 +33,9 @@ func TestEveryVerbDeclaresItsHistory(t *testing.T) {
 			}
 		}
 	}
-	if want := 2*len(rowNouns) + 2 + len(dailyVerbs); n != want {
+	// list and show of each row noun, and its six generated core verbs (get,
+	// set, create, delete, archive, edit: the nouns are read-only thing nouns).
+	if want := (2+6)*len(rowNouns) + 2 + len(dailyVerbs); n != want {
 		t.Fatalf("the catalog has %d o-inventory verbs, want %d", n, want)
 	}
 

@@ -114,6 +114,11 @@ func TestNounsListShowAndStateFromTheLatestSnapshot(t *testing.T) {
 	if err := json.Unmarshal([]byte(f.mustRun("story", "show", "chrome/wide")), &row); err != nil || row.Str("skip") != "gap: the footer cuts at 80" {
 		t.Fatalf("story show: %v %v", err, row)
 	}
+	// The row nouns are thing nouns over their list: get reads one row.
+	var got map[string]any
+	if err := json.Unmarshal([]byte(f.mustRun("tool", "get", "tool:o-alpha")), &got); err != nil || got["id"] != "tool:o-alpha" || got["label"] != "o-alpha 0.1.0" {
+		t.Fatalf("tool get: %v %v", err, got)
+	}
 	var tables []ListRow
 	if err := json.Unmarshal([]byte(f.mustRun("table", "list")), &tables); err != nil || len(tables) != 2 || tables[0].Label != "mtm history (history, key seq, v1, append-only)" {
 		t.Fatalf("table list: %v %+v", err, tables)
