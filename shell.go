@@ -243,7 +243,7 @@ func (t *Tool) shell() *ocli.Shell {
 		op := r.Operations[noun+".show"]
 		op.Parameters = map[string]ochazuke.Parameter{"entry": {Type: "string", Description: "an id (" + noun + ":...) or label from " + noun + " list"}}
 		r.Operations[noun+".show"] = op
-		listStore{Noun: noun, List: func(ochazuke.Ctx) ochazuke.Result { return listed(noun) }}.define(r)
+		r.DefineListFacts(ochazuke.ListFacts{Noun: noun, List: func(ochazuke.Ctx) ochazuke.Result { return listed(noun) }})
 		if tb, ok := tables[noun]; ok { // the catalog's columns, and the list drawn as a table
 			r.DefineOwn(noun).Columns(tb.columns...)
 			lists[noun].SetColumns(tb.columns...)
