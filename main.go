@@ -14,7 +14,7 @@
 //	o-inventory repos                              the family repos (repos.json)
 //	o-inventory errors [--jsonl P] [--md P] ROOT [PATTERN...]   a module's error sites
 //	o-inventory NOUN list|show                     rows of the latest snapshot
-//	o-inventory state                              every noun's rows, JSON Lines
+//	o-inventory lists                              every noun's rows, JSON Lines
 //	o-inventory catalog                            the nouns and verbs, for a host (nabe)
 //
 // o abbreviates, so o inv ARGS and o inventory ARGS both run it.
@@ -79,11 +79,11 @@ func (t *Tool) Main(ctx context.Context, args []string) error {
 	return app.Run(ctx)
 }
 
-// mount keeps the inventory state shortcut ahead of the runtime's state noun.
+// mount keeps the inventory lists shortcut.
 // Shared mounting supplies every noun's contextual help and catalog.
 func mount(app *oden.App, sh *ocli.Shell) {
-	app.Add(oden.Command{Name: "state", Summary: "every noun's rows of the latest snapshot as JSON Lines (inventory state)", Source: "noun", Run: func(ctx context.Context, rest []string) error {
-		return sh.Run(ctx, append([]string{"inventory", "state"}, rest...))
+	app.Add(oden.Command{Name: "lists", Summary: "every noun's rows of the latest snapshot as JSON Lines (inventory lists)", Source: "noun", Run: func(ctx context.Context, rest []string) error {
+		return sh.Run(ctx, append([]string{"inventory", "lists"}, rest...))
 	}})
 	ocli.Mount(app, sh)
 }

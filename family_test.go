@@ -108,7 +108,7 @@ func TestSnapshotRecordsRootLibsDepsAndReachability(t *testing.T) {
 	f := familyFixture(t, time.Date(2026, 10, 24, 20, 0, 0, 0, time.UTC))
 	f.mustRun("snapshot")
 	m := byID(f.latest())
-	if r := m["tool:o"]; r["catalog"] != true || r.Str("state") != "command.state" || r["reachable"] != nil {
+	if r := m["tool:o"]; r["catalog"] != true || r.Str("lists") != "command.state" || r["reachable"] != nil {
 		t.Fatalf("tool o %v", r)
 	}
 	if _, ok := m["noun:o/command"]; !ok {

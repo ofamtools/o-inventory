@@ -44,7 +44,7 @@ func TestSnapshotRowsFromFakeToolsRegistryAndStore(t *testing.T) {
 	} else if _, ok := r["catalog"]; !ok {
 		t.Fatalf("o-story row lacks catalog: null: %v", r)
 	}
-	if r := m["tool:o-alpha"]; r["catalog"] != true || r.Str("bin") != "~/bin/o-alpha" || r.Str("version") != "0.1.0" || r.Str("state") != "skill.state" {
+	if r := m["tool:o-alpha"]; r["catalog"] != true || r.Str("bin") != "~/bin/o-alpha" || r.Str("version") != "0.1.0" || r.Str("lists") != "skill.state" {
 		t.Fatalf("o-alpha row %v", r)
 	}
 	if r := m["project:alpha"]; r["hubLink"] != true || r.Str("origin") != "o-proj" || r.Str("path") != "~/proj/alpha" {

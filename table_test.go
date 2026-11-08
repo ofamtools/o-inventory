@@ -80,7 +80,7 @@ func TestEveryRowCarriesItsCells(t *testing.T) {
 			first[noun] = rows[0].Cells
 		}
 	}
-	for _, line := range strings.Split(strings.TrimSpace(f.mustRun("state")), "\n") {
+	for _, line := range strings.Split(strings.TrimSpace(f.mustRun("lists")), "\n") {
 		var r struct {
 			Noun  string   `json:"noun"`
 			ID    string   `json:"id"`
@@ -113,10 +113,10 @@ func TestRunRowsAreTheSnapshotsWritten(t *testing.T) {
 	f := tableFixture(t)
 	f.mustRun("snapshot") // no change: no snapshot, no run
 	var runs []ListRow
-	if err := json.Unmarshal([]byte(f.mustRun("run", "list")), &runs); err != nil {
+	if err := json.Unmarshal([]byte(f.mustRun("job", "list")), &runs); err != nil {
 		t.Fatal(err)
 	}
-	if len(runs) != 2 || runs[0].ID != "run:20261024T201100Z" || runs[1].ID != "run:20261024T201000Z" {
+	if len(runs) != 2 || runs[0].ID != "job:20261024T201100Z" || runs[1].ID != "job:20261024T201000Z" {
 		t.Fatalf("runs %+v", runs)
 	}
 	rows := len(f.latest()) // the second run added one verb row
@@ -128,10 +128,10 @@ func TestRunRowsAreTheSnapshotsWritten(t *testing.T) {
 		t.Errorf("second run cells %q, want %q", second, want)
 	}
 	var row Row
-	if err := json.Unmarshal([]byte(f.mustRun("run", "show", "20261024T201000Z")), &row); err != nil || row.ID() != "run:20261024T201000Z" {
+	if err := json.Unmarshal([]byte(f.mustRun("job", "show", "20261024T201000Z")), &row); err != nil || row.ID() != "job:20261024T201000Z" {
 		t.Fatalf("run show: %v %v", err, row)
 	}
-	if err := json.Unmarshal([]byte(f.mustRun("run", "show", "--target", "run:20261024T201100Z")), &row); err != nil || row.Str("stamp") != "20261024T201100Z" {
+	if err := json.Unmarshal([]byte(f.mustRun("job", "show", "--target", "job:20261024T201100Z")), &row); err != nil || row.Str("stamp") != "20261024T201100Z" {
 		t.Fatalf("run show --target: %v %v", err, row)
 	}
 }

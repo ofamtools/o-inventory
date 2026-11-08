@@ -22,8 +22,8 @@ Keep planning work in the family planning workspace, separate from this reposito
 | o's roster (reachable, shadow rows), lib and dep rows, go.mod parsing | `libs.go` |
 | `overview`: the latest snapshot as one tree (text, `--json`) | `overview.go` |
 | Post-commit hook; the daily launchd job (plist, wrapper, install/uninstall/status/run via launchctl) | `hook.go`, `daily.go` |
-| The runtime: row nouns, list/show, `inventory state` | `shell.go` |
-| Run rows: one per snapshot written, its row and diff counts (`run list`, read only when asked) | `runs.go` |
+| The runtime: row nouns, list/show, `inventory lists` | `shell.go` |
+| Job rows: one per snapshot written, its row and diff counts (`job list`, read only when asked) | `runs.go` |
 | Table columns per row noun (the catalog's columns) and each row's cells | `table.go` |
 | `errors`: a Go module's error sites (go/ast + go/types with stand-in imports; verbs resolved from `Define(noun).Verb`, `Operation{Noun, Verb, Run}` literals, registrar closures and ranged tables; heuristic classes; JSON Lines + Markdown, sorted); fixture module `testdata/errmap` | `errmap.go` |
 

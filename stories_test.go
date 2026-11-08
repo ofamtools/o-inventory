@@ -36,7 +36,7 @@ func (f *fixture) storyTool(state string, shows map[string]string) {
 const storyState = `{"noun":"story","id":"motions/spill","label":"spill: j at the last row","data":{"area":"motions","size":"80x24","chrome":"full","steps":2,"skipped":false}}
 {"noun":"story","id":"chrome/wide","label":"wide footer","data":{"area":"chrome","size":"120x24","chrome":"full","steps":1,"skipped":true}}
 {"noun":"edge","id":"edge/normal/insert/input.edit","label":"normal → insert via input.edit","data":{"from":"normal","to":"insert","via":"input.edit"}}
-{"noun":"verb","id":"verb/normal/list.move","label":"normal list list.move","data":{"mode":"normal","noun":"list","verb":"list.move"}}
+{"noun":"verb","id":"verb/normal/collection.move","label":"normal collection collection.move","data":{"mode":"normal","noun":"collection","verb":"collection.move"}}
 {"noun":"recording","id":"recording/1","label":"history 1: spill","data":{"ref":"1"}}
 `
 

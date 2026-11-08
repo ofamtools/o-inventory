@@ -66,7 +66,7 @@ func TestCatalogAnswersAndBindingsValidate(t *testing.T) {
 			} `json:"verbs"`
 		} `json:"nouns"`
 	}
-	if err := json.Unmarshal([]byte(out), &doc); err != nil || doc.Name != "o-inventory" || doc.State != "inventory.state" {
+	if err := json.Unmarshal([]byte(out), &doc); err != nil || doc.Name != "o-inventory" || doc.State != "inventory.lists" {
 		t.Fatalf("catalog %v: %s", err, out)
 	}
 	rows := map[string]string{}
@@ -130,7 +130,7 @@ func TestNounsListShowAndStateFromTheLatestSnapshot(t *testing.T) {
 	if len(changes) != 1 || changes[0].ID != "change:20261024T201100Z/verb:o-alpha/skill.grep" || changes[0].Label != "added: `o-alpha skill grep`" {
 		t.Fatalf("changes %+v", changes)
 	}
-	lines := strings.Split(strings.TrimSpace(f.mustRun("state")), "\n")
+	lines := strings.Split(strings.TrimSpace(f.mustRun("lists")), "\n")
 	seen := map[string]int{}
 	for _, l := range lines {
 		var r struct{ Noun, ID, Label string }
@@ -144,7 +144,7 @@ func TestNounsListShowAndStateFromTheLatestSnapshot(t *testing.T) {
 			t.Errorf("state has no %s rows: %v", noun, seen)
 		}
 	}
-	if f.mustRun("inventory", "state") != f.mustRun("state") {
+	if f.mustRun("inventory", "lists") != f.mustRun("lists") {
 		t.Fatal("state and inventory state differ")
 	}
 }

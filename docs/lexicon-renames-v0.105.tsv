@@ -1,0 +1,10 @@
+kind	old	new	note
+noun	inventory.run	inventory.job	run is only a verb; the noun is a job row (one per snapshot written). CLI `o inv job list|show`; row ids job:STAMP (were run:STAMP); list/binding context list/run is list/job
+verb	inventory.inventory.state	inventory.inventory.lists	every list's rows (the catalog's state source, Result lists); the oden shortcut `o-inventory state` is `o-inventory lists`. A host finds it by Result, not by name
+verb	inventory.daily.status	inventory.daily.get {prop: status}	status is a computed prop of the daily job (also read as `daily status`, the daily command's word); daily is now a singleton thing noun with the generated core verbs
+json-key	snapshot tool row: state	snapshot tool row: lists	the tool's catalog state source (not a status); older snapshots are read as lists (Row.migrate) and written back as lists. compared fields: state is lists
+check-text	check: `state X; was Y`	check: `lists X; was Y`	o-inventory check message for a changed state source
+noun	inventory (main noun)	inventory	unchanged; declared the main noun (`Main()`), lexiconcheck MainNouns inventory: inventory
+go	ochazuke.List	ochazuke.Collection	framework v0.104.0 (no use here beyond *ochazuke.Collection)
+go	NounBuilder.State()	NounBuilder.Lists()	framework v0.105.0
+command	daily (oden command, no children)	daily with children plist install uninstall status run	the command hid the mounted daily noun (v0.103.0 warning); children file the noun's verbs under it

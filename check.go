@@ -216,7 +216,7 @@ func catalogDrift(registered, now *ocli.CatalogDoc) string {
 		parts = append(parts, "pages")
 	}
 	if registered.State != now.State {
-		parts = append(parts, fmt.Sprintf("state %s; was %s", orNone(now.State), orNone(registered.State)))
+		parts = append(parts, fmt.Sprintf("lists %s; was %s", orNone(now.State), orNone(registered.State)))
 	}
 	return strings.Join(parts, ", ")
 }

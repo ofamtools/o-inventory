@@ -122,8 +122,22 @@ func (t *Tool) commands() []oden.Command {
 		{Name: "errors", Summary: "errors [--jsonl PATH] [--md PATH] ROOT [PATTERN...]: every error site of a Go module (errors.New, fmt.Errorf, sentinels, Failed, error-like Status/Notify, panics) with its function, verb, conditions and a heuristic class; Markdown on stdout unless --md", Run: func(ctx context.Context, args []string) error {
 			return t.ErrorsCommand(args)
 		}},
-		{Name: "daily", Summary: "daily plist|install|uninstall|status|run: the launchd job (" + DailyLabel + ", 09:00 local) that snapshots and writes the changelogs; install bootstraps it in gui/UID", Run: func(ctx context.Context, args []string) error {
+		{Name: "daily", Summary: "daily plist|install|uninstall|status|run: the launchd job (" + DailyLabel + ", 09:00 local) that snapshots and writes the changelogs; install bootstraps it in gui/UID", Children: dailyChildren(t), Run: func(ctx context.Context, args []string) error {
 			return t.DailyCommand(ctx, args)
 		}},
 	}
+}
+
+// dailyChildren are the daily command's words, one child per entry of
+// dailyVerbs (a prop such as status reads the job's value), so the mounted
+// daily noun's verbs are filed under the command and not hidden by it.
+func dailyChildren(t *Tool) []oden.Command {
+	out := make([]oden.Command, 0, len(dailyVerbs))
+	for _, v := range dailyVerbs {
+		word := v.Name
+		out = append(out, oden.Command{Name: word, Summary: v.Summary, Run: func(ctx context.Context, args []string) error {
+			return t.DailyCommand(ctx, append([]string{word}, args...))
+		}})
+	}
+	return out
 }

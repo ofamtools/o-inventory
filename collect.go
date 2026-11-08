@@ -300,7 +300,7 @@ func (t *Tool) Collect(ctx context.Context) Collection {
 			continue
 		}
 		row["catalog"] = true
-		row.set("version", doc.Version).set("state", doc.State)
+		row.set("version", doc.Version).set("lists", doc.State)
 		add(row)
 		docs[pt.Name] = &doc
 		c.Catalogs[pt.Name] = &doc

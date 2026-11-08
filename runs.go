@@ -6,14 +6,14 @@ import (
 	"sync"
 )
 
-// Runs are the snapshots that were written, one run row each, newest
-// first: {kind: run, id: run:STAMP, stamp, time, rows, changes, added,
+// Jobs are the snapshots that were written, one job row each, newest
+// first: {kind: job, id: job:STAMP, stamp, time, rows, changes, added,
 // changed, removed}, where the counts are the diff from the snapshot
 // before it (the first run's rows are all added; a shadow counts as
 // added). A run that found no change wrote no snapshot, so it has no row.
 // Runs are derived from the snapshot files on each read, never stored.
 
-// runRows are the run rows of the inventory directory's snapshots.
+// runRows are the job rows of the inventory directory's snapshots.
 func (t *Tool) runRows() ([]Row, error) {
 	stamps, err := t.snapshots()
 	if err != nil {
@@ -50,7 +50,7 @@ func (t *Tool) runRows() ([]Row, error) {
 			}
 			counts[verb]++
 		}
-		r := newRow("run", stamp)
+		r := newRow("job", stamp)
 		r["stamp"], r["time"] = stamp, stampText(stamp)
 		r["rows"], r["changes"] = len(cur), len(changes)
 		r["added"], r["changed"], r["removed"] = counts["added"], counts["changed"], counts["removed"]

@@ -20,6 +20,24 @@ type Row map[string]any
 // concepts read them.
 var Kinds = []string{"lib", "dep", "shadow", "tool", "noun", "verb", "param", "binding", "page", "host", "project", "story", "edge", "table"}
 
+// renamedFields are the row fields older snapshots spelled otherwise:
+// a tool row's state source was "state" until the lexicon (state is a
+// status field, never a verb) named it "lists". Only tool rows carried it.
+var renamedFields = map[string]string{"state": "lists"}
+
+// migrate reads an older snapshot's row in today's spelling; the next
+// snapshot writes it back so.
+func (r Row) migrate() {
+	for old, now := range renamedFields {
+		if v, ok := r[old]; ok {
+			if _, has := r[now]; !has {
+				r[now] = v
+			}
+			delete(r, old)
+		}
+	}
+}
+
 func (r Row) ID() string   { s, _ := r["id"].(string); return s }
 func (r Row) Kind() string { s, _ := r["kind"].(string); return s }
 
@@ -109,6 +127,7 @@ func readRows(path string) ([]Row, error) {
 		if err := json.Unmarshal([]byte(line), &r); err != nil {
 			return nil, fmt.Errorf("%s:%d: %w", path, n, err)
 		}
+		r.migrate()
 		rows = append(rows, r)
 	}
 	return rows, sc.Err()

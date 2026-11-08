@@ -34,15 +34,23 @@ func TestEveryVerbDeclaresItsHistory(t *testing.T) {
 		}
 	}
 	// list and show of each row noun, and its six generated core verbs (get,
-	// set, create, delete, archive, edit: the nouns are read-only thing nouns).
-	if want := (2+6)*len(rowNouns) + 2 + len(dailyVerbs); n != want {
+	// set, create, delete, archive, edit: the nouns are read-only thing nouns);
+	// the daily job's verbs (its props, such as status, are not verbs) and its
+	// eight generated verbs (the six, list and watch: it is a singleton thing).
+	dailyOwn := 0
+	for _, v := range dailyVerbs {
+		if !v.Prop {
+			dailyOwn++
+		}
+	}
+	if want := (2+6)*len(rowNouns) + 2 + dailyOwn + 8; n != want {
 		t.Fatalf("the catalog has %d o-inventory verbs, want %d", n, want)
 	}
 
 	for key, want := range map[string]string{
-		"tool.list": ochazuke.HistoryFetch, "run.show": ochazuke.HistoryFetch,
-		"inventory.state": ochazuke.HistoryFetch, "inventory.overview": ochazuke.HistoryFetch,
-		"daily.status": ochazuke.HistoryFetch, "daily.plist": ochazuke.HistoryChange,
+		"tool.list": ochazuke.HistoryFetch, "job.show": ochazuke.HistoryFetch,
+		"inventory.lists": ochazuke.HistoryFetch, "inventory.overview": ochazuke.HistoryFetch,
+		"daily.plist":   ochazuke.HistoryChange,
 		"daily.install": ochazuke.HistoryChange, "daily.uninstall": ochazuke.HistoryChange, "daily.run": ochazuke.HistoryChange,
 	} {
 		if got := ops.At(ochazuke.Key(key)).HistoryKind; got != want {

@@ -37,15 +37,21 @@ const DailyLabel = "com.unixsuperhero.o-inventory"
 // DailyJob is what the wrapper runs.
 const DailyJob = "o-inventory snapshot --commit --quiet && o-inventory changelog --write-repos --commit --quiet"
 
-// dailyVerbs are the daily noun's verbs and what each does.
-// History is the verb's history kind: status only reads; plist can write
-// --out, so it is a change like the verbs that install, remove or run.
-var dailyVerbs = []struct{ Name, Summary, History string }{
-	{"plist", "the launchd plist (" + DailyLabel + ", 09:00 local unless --hour/--minute) on stdout, or written to --out PATH", ochazuke.HistoryChange},
-	{"install", "write the wrapper, the log and inventory dirs and ~/Library/LaunchAgents/" + DailyLabel + ".plist, plutil -lint it, launchctl bootstrap it in gui/UID (bootout first when loaded) and print it; idempotent", ochazuke.HistoryChange},
-	{"uninstall", "launchctl bootout the job, remove the plist and the wrapper; the logs stay", ochazuke.HistoryChange},
-	{"status", "whether the plist exists and launchd has it loaded, the last run (the log) and the next scheduled run", ochazuke.HistoryFetch},
-	{"run", "run the wrapper now in the foreground: what the job does (snapshot --commit, changelog --write-repos --commit)", ochazuke.HistoryChange},
+// dailyVerbs are the daily noun's verbs and props and what each does. A
+// Prop is a read-only value of the daily job (lexicon: a value of one thing
+// is a prop, not a verb): the noun answers it as a computed prop (daily
+// status) and the daily command still takes the word. History is the verb's
+// history kind: plist can write --out, so it is a change like the verbs
+// that install, remove or run.
+var dailyVerbs = []struct {
+	Name, Summary, History string
+	Prop                   bool
+}{
+	{"plist", "the launchd plist (" + DailyLabel + ", 09:00 local unless --hour/--minute) on stdout, or written to --out PATH", ochazuke.HistoryChange, false},
+	{"install", "write the wrapper, the log and inventory dirs and ~/Library/LaunchAgents/" + DailyLabel + ".plist, plutil -lint it, launchctl bootstrap it in gui/UID (bootout first when loaded) and print it; idempotent", ochazuke.HistoryChange, false},
+	{"uninstall", "launchctl bootout the job, remove the plist and the wrapper; the logs stay", ochazuke.HistoryChange, false},
+	{"status", "whether the plist exists and launchd has it loaded, the last run (the log) and the next scheduled run", ochazuke.HistoryFetch, true},
+	{"run", "run the wrapper now in the foreground: what the job does (snapshot --commit, changelog --write-repos --commit)", ochazuke.HistoryChange, false},
 }
 
 // DailyOptions are the daily verbs' flags.

@@ -24,7 +24,7 @@ import (
 const Version = "0.1.0"
 
 // rowNouns are the row kinds the runtime lists.
-var rowNouns = []string{"lib", "dep", "tool", "noun", "verb", "binding", "page", "host", "project", "story", "edge", "table", "change", "run"}
+var rowNouns = []string{"lib", "dep", "tool", "noun", "verb", "binding", "page", "host", "project", "story", "edge", "table", "change", "job"}
 
 // ListRow is one element of a list.
 type ListRow struct {
@@ -110,7 +110,7 @@ func label(r Row) string {
 			s += ", append-only"
 		}
 		return s + ")"
-	case "run":
+	case "job":
 		return fmt.Sprintf("%s: %s rows, %s changes", r.Str("stamp"), number(r["rows"]), number(r["changes"]))
 	case "change":
 		if l := r.Str("line"); l != "" {
@@ -149,7 +149,7 @@ func (t *Tool) inventoryRows() (map[string][]Row, error) {
 
 func (t *Tool) shell() *ocli.Shell {
 	r := ochazuke.NewRuntime()
-	lists := map[string]*ochazuke.List{}
+	lists := map[string]*ochazuke.Collection{}
 	for _, noun := range rowNouns {
 		list, err := r.AddList("list/"+noun, nil)
 		if err != nil {
@@ -175,7 +175,7 @@ func (t *Tool) shell() *ocli.Shell {
 		}
 		if runs {
 			var err error
-			if rows["run"], err = t.runRows(); err != nil {
+			if rows["job"], err = t.runRows(); err != nil {
 				return nil, err
 			}
 			runsRead = true
@@ -193,7 +193,7 @@ func (t *Tool) shell() *ocli.Shell {
 		return rows, nil
 	}
 	listed := func(noun string) ochazuke.Result {
-		rows, err := load(noun == "run")
+		rows, err := load(noun == "job")
 		if err != nil {
 			return ochazuke.Failed(err)
 		}
@@ -213,7 +213,7 @@ func (t *Tool) shell() *ocli.Shell {
 		if entry == "" {
 			return ochazuke.Failed(fmt.Errorf("%s show needs ENTRY (an id or label from %s list) or --target ID", noun, noun))
 		}
-		rows, err := load(noun == "run")
+		rows, err := load(noun == "job")
 		if err != nil {
 			return ochazuke.Failed(err)
 		}
@@ -230,7 +230,7 @@ func (t *Tool) shell() *ocli.Shell {
 	}
 	for _, noun := range rowNouns {
 		listDesc := "the latest snapshot's " + noun + " rows: {id, label, data: the row, cells}"
-		if noun == "run" {
+		if noun == "job" {
 			listDesc = "the snapshots written, newest first: {id, label, data: {stamp, time, rows, changes, added, changed, removed}, cells}"
 		}
 		// DefineOwn: the row kinds are o-inventory's own nouns, so page
@@ -249,8 +249,8 @@ func (t *Tool) shell() *ocli.Shell {
 			lists[noun].SetColumns(tb.columns...)
 		}
 	}
-	r.Define("inventory").
-		Verb("state", func(ochazuke.Ctx) ochazuke.Result {
+	r.Define("inventory").Main(). // the tool's main noun: `o-inventory overview` is `inventory overview`
+					Verb("lists", func(ochazuke.Ctx) ochazuke.Result {
 			rows, err := load(true)
 			if err != nil {
 				return ochazuke.Failed(err)
@@ -262,7 +262,7 @@ func (t *Tool) shell() *ocli.Shell {
 				}
 			}
 			return ochazuke.Done(out)
-		}, "every list's rows in one answer, JSON Lines {noun, id, label, cells} for "+strings.Join(rowNouns, ", ")+" (the catalog's state)").State().Fetch().
+		}, "every list's rows in one answer, JSON Lines {noun, id, label, cells} for "+strings.Join(rowNouns, ", ")+" (the catalog's state source)").Lists().Fetch().
 		Verb("overview", func(c ochazuke.Ctx) ochazuke.Result {
 			ov, err := t.Overview()
 			if err != nil {
@@ -283,45 +283,14 @@ func (t *Tool) shell() *ocli.Shell {
 		r.Operations.Set(op)
 	}
 
-	daily := r.Define("daily")
-	for _, v := range dailyVerbs {
-		verb := v.Name
-		daily.Verb(verb, func(c ochazuke.Ctx) ochazuke.Result {
-			o := DailyOptions{Out: ochazuke.StringArg(c.Args, "out", ""), Hour: ochazuke.IntArg(c.Args, "hour", 9), Minute: ochazuke.IntArg(c.Args, "minute", 0)}
-			var buf bytes.Buffer
-			if err := t.Daily(context.Background(), verb, o, &buf); err != nil {
-				return ochazuke.Failed(err)
-			}
-			var out ocli.Lines
-			for _, line := range strings.Split(strings.TrimRight(buf.String(), "\n"), "\n") {
-				out = append(out, line)
-			}
-			return ochazuke.Done(out)
-		}, v.Summary)
-		setHistory(r, v.History, "daily."+verb)
-	}
-	timeParams := map[string]ochazuke.Parameter{
-		"hour":   {Type: "integer", Description: "the hour the job runs, local time (default 9)"},
-		"minute": {Type: "integer", Description: "the minute the job runs (default 0)"},
-	}
-	for _, verb := range []string{"plist", "install"} {
-		op := r.Operations.At(ochazuke.Key("daily." + verb))
-		op.Parameters = map[string]ochazuke.Parameter{}
-		for k, p := range timeParams {
-			op.Parameters[k] = p
-		}
-		if verb == "plist" {
-			op.Parameters["out"] = ochazuke.Parameter{Type: "string", Description: "write the plist to this path instead of stdout"}
-		}
-		r.Operations.Set(op)
-	}
+	t.defineDaily(r)
 
 	sh := ocli.New(r, "o-inventory", t.Stdin, t.Stdout, t.Stderr)
 	sh.Usage = ocli.DefaultUsage(t.Prog)
 	sh.Version = Version
 	sh.Reveal = func(target string) error {
 		kind, _, ok := strings.Cut(target, ":")
-		if _, err := load(kind == "run"); err != nil {
+		if _, err := load(kind == "job"); err != nil {
 			return err
 		}
 		if !ok || lists[kind] == nil {
@@ -346,6 +315,62 @@ func setHistory(r *ochazuke.Runtime, kind string, keys ...string) {
 			panic("setHistory: no operation " + key)
 		}
 		op.HistoryKind = kind
+		r.Operations.Set(op)
+	}
+}
+
+// defineDaily is the daily noun: the launchd job's verbs, and its read-only
+// values as computed props of the one daily thing.
+func (t *Tool) defineDaily(r *ochazuke.Runtime) {
+	daily := r.Define("daily")
+	var dailyProps []ochazuke.PropSpec
+	for _, v := range dailyVerbs {
+		verb := v.Name
+		read := func(ctx context.Context) (ocli.Lines, error) {
+			var buf bytes.Buffer
+			if err := t.Daily(ctx, verb, DailyOptions{Hour: 9}, &buf); err != nil {
+				return nil, err
+			}
+			var out ocli.Lines
+			for _, line := range strings.Split(strings.TrimRight(buf.String(), "\n"), "\n") {
+				out = append(out, line)
+			}
+			return out, nil
+		}
+		if v.Prop {
+			dailyProps = append(dailyProps, ochazuke.PropSpec{Name: verb, ReadOnly: true, Parameter: ochazuke.Parameter{Type: ochazuke.SettingList, Description: v.Summary},
+				Read: func(c ochazuke.Ctx, _ ochazuke.Thing) (any, error) { return read(context.Background()) }})
+			continue
+		}
+		daily.Verb(verb, func(c ochazuke.Ctx) ochazuke.Result {
+			o := DailyOptions{Out: ochazuke.StringArg(c.Args, "out", ""), Hour: ochazuke.IntArg(c.Args, "hour", 9), Minute: ochazuke.IntArg(c.Args, "minute", 0)}
+			var buf bytes.Buffer
+			if err := t.Daily(context.Background(), verb, o, &buf); err != nil {
+				return ochazuke.Failed(err)
+			}
+			var out ocli.Lines
+			for _, line := range strings.Split(strings.TrimRight(buf.String(), "\n"), "\n") {
+				out = append(out, line)
+			}
+			return ochazuke.Done(out)
+		}, v.Summary)
+		setHistory(r, v.History, "daily."+verb)
+	}
+	// The daily job is one thing; its read-only values are computed props.
+	daily.Props(dailyProps...).Store(ochazuke.Store{Kind: ochazuke.Singleton, Facts: true, Get: func(ochazuke.Ctx, string) (ochazuke.Thing, error) { return ochazuke.Thing{}, nil }})
+	timeParams := map[string]ochazuke.Parameter{
+		"hour":   {Type: "integer", Description: "the hour the job runs, local time (default 9)"},
+		"minute": {Type: "integer", Description: "the minute the job runs (default 0)"},
+	}
+	for _, verb := range []string{"plist", "install"} {
+		op := r.Operations.At(ochazuke.Key("daily." + verb))
+		op.Parameters = map[string]ochazuke.Parameter{}
+		for k, p := range timeParams {
+			op.Parameters[k] = p
+		}
+		if verb == "plist" {
+			op.Parameters["out"] = ochazuke.Parameter{Type: "string", Description: "write the plist to this path instead of stdout"}
+		}
 		r.Operations.Set(op)
 	}
 }

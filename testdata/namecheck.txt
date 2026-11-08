@@ -23,7 +23,6 @@ changelog.go	view.fold	case	"page"	1
 changelog.go	view.fold	case	"tool"	1
 changelog.go	view.fold	case	"verb"	3
 changelog.go	view.foldTables	compare	"binding"	2
-changelog.go	view.lines	compare	"commit"	1
 changelog.go	view.lines	compare	"lib"	1
 changelog.go	view.removedText	case	"noun"	1
 changelog.go	view.removedText	case	"tool"	1
@@ -63,9 +62,7 @@ collect.go	storyRows	compare	"story"	2
 daily.go	Tool.Daily	case	"install"	1
 daily.go	Tool.Daily	case	"plist"	1
 daily.go	Tool.Daily	case	"run"	1
-daily.go	Tool.Daily	case	"status"	1
 daily.go	Tool.Daily	case	"uninstall"	1
-daily.go	printSummary	case	"state"	1
 diff.go	var compared	table	"binding"	1
 diff.go	var compared	table	"dep"	1
 diff.go	var compared	table	"edge"	1
@@ -82,7 +79,6 @@ diff.go	var neverCompared	table	"id"	1
 diff.go	var neverCompared	table	"kind"	1
 errmap.go	emReport.WriteMarkdown	cyclo	"-"	48
 errmap.go	emScan.callSite	cyclo	"-"	26
-errmap.go	emScan.finish	compare	"status"	1
 errmap.go	emScan.passBuilders	cyclo	"-"	29
 errmap.go	emScan.passSites	cyclo	"-"	28
 hook.go	Tool.HookCommand	compare	"install"	1
@@ -93,19 +89,19 @@ libs.go	readGoMod	compare	"replace"	2
 libs.go	readGoMod	compare	"require"	2	go.mod directive keyword, not the confirm.require verb
 overview.go	Tool.overviewOf	compare	"noun"	1
 overview.go	Tool.overviewOf	cyclo	"-"	31
-shell.go	Tool.shell	compare	"plist"	1
-shell.go	Tool.shell	compare	"run"	4
-shell.go	Tool.shell	cyclo	"-"	43
+shell.go	Tool.defineDaily	compare	"plist"	1
+shell.go	Tool.shell	compare	"job"	4
+shell.go	Tool.shell	cyclo	"-"	37
 shell.go	label	case	"binding"	1
 shell.go	label	case	"change"	1
 shell.go	label	case	"dep"	1
 shell.go	label	case	"edge"	1
 shell.go	label	case	"host"	1
+shell.go	label	case	"job"	1
 shell.go	label	case	"lib"	1
 shell.go	label	case	"noun"	1
 shell.go	label	case	"page"	1
 shell.go	label	case	"project"	1
-shell.go	label	case	"run"	1
 shell.go	label	case	"story"	1
 shell.go	label	case	"table"	1
 shell.go	label	case	"tool"	1
@@ -117,11 +113,11 @@ table.go	var tables	table	"change"	1
 table.go	var tables	table	"dep"	1
 table.go	var tables	table	"edge"	1
 table.go	var tables	table	"host"	1
+table.go	var tables	table	"job"	1
 table.go	var tables	table	"lib"	1
 table.go	var tables	table	"noun"	1
 table.go	var tables	table	"page"	1
 table.go	var tables	table	"project"	1
-table.go	var tables	table	"run"	1
 table.go	var tables	table	"story"	1
 table.go	var tables	table	"table"	1
 table.go	var tables	table	"tool"	1
