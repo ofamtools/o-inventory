@@ -240,9 +240,9 @@ func (t *Tool) shell() *ocli.Shell {
 			Verb("list", func(ochazuke.Ctx) ochazuke.Result { return listed(noun) }, listDesc).Rows(noun).Fetch().
 			Verb("show", func(c ochazuke.Ctx) ochazuke.Result { return show(noun, c) },
 				"one "+noun+" row: ENTRY (an id or label) or --target ID").Positional("entry").Fetch()
-		op := r.Operations[noun+".show"]
+		op := r.Operations.At(ochazuke.Key(noun + ".show"))
 		op.Parameters = map[string]ochazuke.Parameter{"entry": {Type: "string", Description: "an id (" + noun + ":...) or label from " + noun + " list"}}
-		r.Operations[noun+".show"] = op
+		r.Operations.Set(op)
 		r.DefineListFacts(ochazuke.ListFacts{Noun: noun, List: func(ochazuke.Ctx) ochazuke.Result { return listed(noun) }})
 		if tb, ok := tables[noun]; ok { // the catalog's columns, and the list drawn as a table
 			r.DefineOwn(noun).Columns(tb.columns...)
@@ -278,9 +278,9 @@ func (t *Tool) shell() *ocli.Shell {
 			return ochazuke.Done(out)
 		}, "the latest snapshot as one tree: libs, root, tools, hosts, projects (--json: the tree as data)").Fetch()
 	{
-		op := r.Operations["inventory.overview"]
+		op := r.Operations.At("inventory.overview")
 		op.Parameters = map[string]ochazuke.Parameter{"json": {Type: "boolean", Description: "the tree as data instead of text lines"}}
-		r.Operations["inventory.overview"] = op
+		r.Operations.Set(op)
 	}
 
 	daily := r.Define("daily")
@@ -305,7 +305,7 @@ func (t *Tool) shell() *ocli.Shell {
 		"minute": {Type: "integer", Description: "the minute the job runs (default 0)"},
 	}
 	for _, verb := range []string{"plist", "install"} {
-		op := r.Operations["daily."+verb]
+		op := r.Operations.At(ochazuke.Key("daily." + verb))
 		op.Parameters = map[string]ochazuke.Parameter{}
 		for k, p := range timeParams {
 			op.Parameters[k] = p
@@ -313,7 +313,7 @@ func (t *Tool) shell() *ocli.Shell {
 		if verb == "plist" {
 			op.Parameters["out"] = ochazuke.Parameter{Type: "string", Description: "write the plist to this path instead of stdout"}
 		}
-		r.Operations["daily."+verb] = op
+		r.Operations.Set(op)
 	}
 
 	sh := ocli.New(r, "o-inventory", t.Stdin, t.Stdout, t.Stderr)
@@ -341,11 +341,11 @@ func setHistory(r *ochazuke.Runtime, kind string, keys ...string) {
 		panic("setHistory: no kind")
 	}
 	for _, key := range keys {
-		op, ok := r.Operations[key]
+		op, ok := r.Operations.Find(ochazuke.Key(key))
 		if !ok {
 			panic("setHistory: no operation " + key)
 		}
 		op.HistoryKind = kind
-		r.Operations[key] = op
+		r.Operations.Set(op)
 	}
 }

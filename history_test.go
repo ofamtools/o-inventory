@@ -19,7 +19,7 @@ func TestEveryVerbDeclaresItsHistory(t *testing.T) {
 	if err := json.Unmarshal([]byte(f.mustRun("catalog")), &doc); err != nil {
 		t.Fatal(err)
 	}
-	ops := f.tool0().shell().Runtime.Operations
+	ops := &f.tool0().shell().Runtime.Operations
 	n := 0
 	for _, noun := range doc.Nouns {
 		for _, v := range noun.Verbs {
@@ -28,8 +28,8 @@ func TestEveryVerbDeclaresItsHistory(t *testing.T) {
 				continue
 			}
 			n++
-			if v.History == "" || ops[key].HistoryKind == "" || v.History != ops[key].HistoryKind {
-				t.Errorf("catalog verb %s: history %q, declared %q", key, v.History, ops[key].HistoryKind)
+			if v.History == "" || ops.At(ochazuke.Key(key)).HistoryKind == "" || v.History != ops.At(ochazuke.Key(key)).HistoryKind {
+				t.Errorf("catalog verb %s: history %q, declared %q", key, v.History, ops.At(ochazuke.Key(key)).HistoryKind)
 			}
 		}
 	}
@@ -45,7 +45,7 @@ func TestEveryVerbDeclaresItsHistory(t *testing.T) {
 		"daily.status": ochazuke.HistoryFetch, "daily.plist": ochazuke.HistoryChange,
 		"daily.install": ochazuke.HistoryChange, "daily.uninstall": ochazuke.HistoryChange, "daily.run": ochazuke.HistoryChange,
 	} {
-		if got := ops[key].HistoryKind; got != want {
+		if got := ops.At(ochazuke.Key(key)).HistoryKind; got != want {
 			t.Errorf("%s: %q, want %q", key, got, want)
 		}
 	}
@@ -63,7 +63,7 @@ func TestRowNounsAreOInventorysOwn(t *testing.T) {
 		if op, ok := r.Operation(noun + ".list"); !ok || op.Builtin {
 			t.Errorf("%s.list is not o-inventory's: %+v", noun, op)
 		}
-		if op, ok := r.Operations["app."+noun+".list"]; ok {
+		if op, ok := r.Operations.Find(ochazuke.Key("app." + noun + ".list")); ok {
 			t.Errorf("app.%s.list exists: %+v", noun, op)
 		}
 	}
