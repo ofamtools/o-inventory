@@ -6,6 +6,8 @@ import (
 	"path/filepath"
 	"strings"
 	"testing"
+
+	"ofam.dev/ochazuke"
 )
 
 func TestNounHelpDoesNotExecute(t *testing.T) {
@@ -146,5 +148,31 @@ func TestNounsListShowAndStateFromTheLatestSnapshot(t *testing.T) {
 	}
 	if f.mustRun("inventory", "lists") != f.mustRun("lists") {
 		t.Fatal("state and inventory state differ")
+	}
+}
+
+// Each command that has a verb on the main noun prints what the verb answers
+// (one table, cmdVerbs). The fixture's home is a temp dir, so nothing reaches
+// a real repo or the real hub.
+func TestCommandVerbsAnswerLikeTheirCommands(t *testing.T) {
+	f := newFixture(t)
+	for _, c := range []struct{ verb, command string }{{"export", "repos"}, {"diff", "diff"}} {
+		want, werr := f.run(c.command)
+		raw, gerr := f.run("inventory", c.verb)
+		var got string // a verb answers its lines as JSON strings
+		for _, line := range strings.Split(strings.TrimSpace(raw), "\n") {
+			var text string
+			if json.Unmarshal([]byte(line), &text) == nil {
+				got += text + "\n"
+			}
+		}
+		if (werr == nil) != (gerr == nil) || strings.TrimSpace(want) != strings.TrimSpace(got) {
+			t.Errorf("inventory %s %q (%v), command %s %q (%v)", c.verb, got, gerr, c.command, want, werr)
+		}
+	}
+	for _, v := range cmdVerbs {
+		if _, ok := f.tool0().shell().Runtime.Operations.Find(ochazuke.Key("inventory." + v.Verb)); !ok {
+			t.Errorf("no verb inventory.%s", v.Verb)
+		}
 	}
 }

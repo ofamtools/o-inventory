@@ -24,6 +24,7 @@ Keep planning work in the family planning workspace, separate from this reposito
 | Post-commit hook; the daily launchd job (plist, wrapper, install/uninstall/status/run via launchctl) | `hook.go`, `daily.go` |
 | The runtime: row nouns, list/show, `inventory lists` | `shell.go` |
 | Job rows: one per snapshot written, its row and diff counts (`job list`, read only when asked) | `runs.go` |
+| The commands that are also verbs of the main noun (`inventory record`, `diff`, `merge`, `check`, `install`, `inspect`, `export`): one table, `cmdVerbs`, running the command against a tool with captured stdout | `verbs.go` |
 | Table columns per row noun (the catalog's columns) and each row's cells | `table.go` |
 | `errors`: a Go module's error sites (go/ast + go/types with stand-in imports; verbs resolved from `Define(noun).Verb`, `Operation{Noun, Verb, Run}` literals, registrar closures and ranged tables; heuristic classes; JSON Lines + Markdown, sorted); fixture module `testdata/errmap` | `errmap.go` |
 
@@ -35,5 +36,6 @@ Keep planning work in the family planning workspace, separate from this reposito
 - Changelog lines start with `added:`/`changed:`/`removed:`/`fixed:`/`shadow:` (a claim an `o` command newly shadows); a `changed:` line has `; was`; `fixed:` only from `fix:` commit subjects. `TestChangelogEntryGrammarAndRepoFiles` pins it.
 - Framework nouns (no application verb, cli.Mount's rule) are recorded once under `ochazuke`.
 - Every list noun declares columns (`table.go`) and every row it lists carries one cell per column: in its list and in the state (`TestEveryRowCarriesItsCells`).
+- A command is a verb of the noun that fits, from `cmdVerbs`; `snapshot`, `changelog`, `hook` and `errors` are nouns or non-actions in the lexicon, so their verbs are `record`, `merge`, `install` and `inspect`. Every CLI word keeps working. `daily` already has its own noun. No command here is a TUI or long-lived server launcher.
 - Every list verb declares `.Rows(noun)`; no key bindings here; never bind function keys.
 - Every commit: `gofmt -l . && go vet ./... && go test -race ./...` green, `go run . catalog` answers, `o proj check`.

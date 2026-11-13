@@ -17,6 +17,9 @@
 //	o-inventory lists                              every noun's rows, JSON Lines
 //	o-inventory catalog                            the nouns and verbs, for a host (nabe)
 //
+// Each of those commands is also a verb: inventory record|diff|merge|check|
+// install|inspect|export (verbs.go); the command words keep working.
+//
 // o abbreviates, so o inv ARGS and o inventory ARGS both run it.
 package main
 

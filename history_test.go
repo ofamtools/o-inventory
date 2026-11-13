@@ -33,17 +33,19 @@ func TestEveryVerbDeclaresItsHistory(t *testing.T) {
 			}
 		}
 	}
-	// list and show of each row noun, and its six generated core verbs (get,
-	// set, create, delete, archive, edit: the nouns are read-only thing nouns);
-	// the daily job's verbs (its props, such as status, are not verbs) and its
-	// eight generated verbs (the six, list and watch: it is a singleton thing).
+	// list and show of each row noun, and its generated verbs (get, set,
+	// create, delete, archive, edit, history, yank: the nouns are read-only
+	// thing nouns); the main noun's lists, overview and one verb per command in
+	// cmdVerbs; the daily job's verbs (its props, such as status, are not
+	// verbs) and its eleven generated verbs (the standard ones, list and
+	// watch: it is a singleton thing).
 	dailyOwn := 0
 	for _, v := range dailyVerbs {
 		if !v.Prop {
 			dailyOwn++
 		}
 	}
-	if want := (2+6)*len(rowNouns) + 2 + dailyOwn + 8; n != want {
+	if want := (2+8)*len(rowNouns) + 2 + len(cmdVerbs) + dailyOwn + 11; n != want {
 		t.Fatalf("the catalog has %d o-inventory verbs, want %d", n, want)
 	}
 

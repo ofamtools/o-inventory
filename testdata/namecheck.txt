@@ -24,6 +24,7 @@ changelog.go	view.fold	case	"tool"	1
 changelog.go	view.fold	case	"verb"	3
 changelog.go	view.foldTables	compare	"binding"	2
 changelog.go	view.lines	compare	"lib"	1
+changelog.go	view.lines	compare	"commit"	1
 changelog.go	view.removedText	case	"noun"	1
 changelog.go	view.removedText	case	"tool"	1
 changelog.go	view.removedText	case	"verb"	1

@@ -283,6 +283,7 @@ func (t *Tool) shell() *ocli.Shell {
 		r.Operations.Set(op)
 	}
 
+	t.defineCommandVerbs(r)
 	t.defineDaily(r)
 
 	sh := ocli.New(r, "o-inventory", t.Stdin, t.Stdout, t.Stderr)
