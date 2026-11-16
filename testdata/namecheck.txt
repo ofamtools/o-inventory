@@ -23,8 +23,8 @@ changelog.go	view.fold	case	"page"	1
 changelog.go	view.fold	case	"tool"	1
 changelog.go	view.fold	case	"verb"	3
 changelog.go	view.foldTables	compare	"binding"	2
-changelog.go	view.lines	compare	"lib"	1
 changelog.go	view.lines	compare	"commit"	1
+changelog.go	view.lines	compare	"lib"	1
 changelog.go	view.removedText	case	"noun"	1
 changelog.go	view.removedText	case	"tool"	1
 changelog.go	view.removedText	case	"verb"	1
@@ -77,7 +77,6 @@ diff.go	var compared	table	"table"	1
 diff.go	var compared	table	"tool"	1
 diff.go	var compared	table	"verb"	1
 diff.go	var neverCompared	table	"id"	1
-diff.go	var neverCompared	table	"kind"	1
 errmap.go	emReport.WriteMarkdown	cyclo	"-"	48
 errmap.go	emScan.callSite	cyclo	"-"	26
 errmap.go	emScan.passBuilders	cyclo	"-"	29

@@ -3,7 +3,7 @@ module ofam.dev/o-inventory
 go 1.26.0
 
 require (
-	ofam.dev/ochazuke v0.134.0
+	ofam.dev/ochazuke v0.144.0
 	ofam.dev/oden v0.5.1
 )
 
