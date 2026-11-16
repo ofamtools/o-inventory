@@ -23,6 +23,7 @@ Keep planning work in the family planning workspace, separate from this reposito
 | `overview`: the latest snapshot as one tree (text, `--json`) | `overview.go` |
 | Post-commit hook; the daily launchd job (plist, wrapper, install/uninstall/status/run via launchctl) | `hook.go`, `daily.go` |
 | The runtime: row nouns, list/show, `inventory lists` | `shell.go` |
+| Hidden default key rows as data (the run-3 key picker's), loaded after every verb is registered | `bindings.go`, `bindings.json` |
 | Job rows: one per snapshot written, its row and diff counts (`job list`, read only when asked); the counts are cached in `$XDG_CACHE_HOME/o-inventory/jobs.json` (derived, deletable), so only unindexed snapshots are parsed, one at a time | `runs.go`, `jobindex.go` |
 | The commands that are also verbs of the main noun (`inventory record`, `diff`, `merge`, `check`, `install`, `inspect`, `export`): one table, `cmdVerbs`, running the command against a tool with captured stdout | `verbs.go` |
 | Table columns per row noun (the catalog's columns) and each row's cells | `table.go` |
@@ -37,5 +38,5 @@ Keep planning work in the family planning workspace, separate from this reposito
 - Framework nouns (no application verb, cli.Mount's rule) are recorded once under `ochazuke`.
 - Every list noun declares columns (`table.go`) and every row it lists carries one cell per column: in its list and in the state (`TestEveryRowCarriesItsCells`).
 - A command is a verb of the noun that fits, from `cmdVerbs`; `snapshot`, `changelog`, `hook` and `errors` are nouns or non-actions in the lexicon, so their verbs are `record`, `merge`, `install` and `inspect`. Every CLI word keeps working. `daily` already has its own noun. No command here is a TUI or long-lived server launcher.
-- Every list verb declares `.Rows(noun)`; no key bindings here; never bind function keys.
+- Every list verb declares `.Rows(noun)`; no Go key rows: the hidden default rows are data in `bindings.json`; never bind function keys.
 - Every commit: `gofmt -l . && go vet ./... && go test -race ./...` green, `go run . catalog` answers, `o proj check`.

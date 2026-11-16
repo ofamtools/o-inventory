@@ -285,6 +285,7 @@ func (t *Tool) shell() *ocli.Shell {
 
 	t.defineCommandVerbs(r)
 	t.defineDaily(r)
+	loadDefaultBindings(r)
 
 	sh := ocli.New(r, "o-inventory", t.Stdin, t.Stdout, t.Stderr)
 	sh.Usage = ocli.DefaultUsage(t.Prog)
