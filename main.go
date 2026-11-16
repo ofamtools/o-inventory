@@ -48,6 +48,8 @@ type Tool struct {
 	UID            int    // the launchd gui/UID domain of the daily job
 
 	Now func() time.Time // time.Now unless a test sets the clock
+
+	ReadSnapshot func(path string) ([]Row, error) // readRows unless a test counts the reads
 }
 
 func main() {

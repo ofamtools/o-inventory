@@ -23,7 +23,7 @@ Keep planning work in the family planning workspace, separate from this reposito
 | `overview`: the latest snapshot as one tree (text, `--json`) | `overview.go` |
 | Post-commit hook; the daily launchd job (plist, wrapper, install/uninstall/status/run via launchctl) | `hook.go`, `daily.go` |
 | The runtime: row nouns, list/show, `inventory lists` | `shell.go` |
-| Job rows: one per snapshot written, its row and diff counts (`job list`, read only when asked) | `runs.go` |
+| Job rows: one per snapshot written, its row and diff counts (`job list`, read only when asked); the counts are cached in `$XDG_CACHE_HOME/o-inventory/jobs.json` (derived, deletable), so only unindexed snapshots are parsed, one at a time | `runs.go`, `jobindex.go` |
 | The commands that are also verbs of the main noun (`inventory record`, `diff`, `merge`, `check`, `install`, `inspect`, `export`): one table, `cmdVerbs`, running the command against a tool with captured stdout | `verbs.go` |
 | Table columns per row noun (the catalog's columns) and each row's cells | `table.go` |
 | `errors`: a Go module's error sites (go/ast + go/types with stand-in imports; verbs resolved from `Define(noun).Verb`, `Operation{Noun, Verb, Run}` literals, registrar closures and ranged tables; heuristic classes; JSON Lines + Markdown, sorted); fixture module `testdata/errmap` | `errmap.go` |
