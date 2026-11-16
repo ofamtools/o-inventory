@@ -2,9 +2,7 @@
 {
   "bindings": [
     {"context": "binding/normal", "bindings": [
-      {"key": "d a", "action": "binding.archive", "hidden": true},
       {"key": "n", "action": "binding.create", "hidden": true},
-      {"key": "d d", "action": "binding.delete", "hidden": true},
       {"key": "r", "action": "binding.edit", "hidden": true},
       {"key": "M", "action": "binding.get", "hidden": true},
       {"key": "U", "action": "binding.history", "hidden": true},
@@ -14,9 +12,7 @@
       {"key": "p", "action": "binding.yank", "hidden": true}
     ]},
     {"context": "change/normal", "bindings": [
-      {"key": "d a", "action": "change.archive", "hidden": true},
       {"key": "n", "action": "change.create", "hidden": true},
-      {"key": "d d", "action": "change.delete", "hidden": true},
       {"key": "r", "action": "change.edit", "hidden": true},
       {"key": "M", "action": "change.get", "hidden": true},
       {"key": "U", "action": "change.history", "hidden": true},
@@ -43,9 +39,7 @@
       {"key": "p", "action": "daily.yank", "hidden": true}
     ]},
     {"context": "dep/normal", "bindings": [
-      {"key": "d a", "action": "dep.archive", "hidden": true},
       {"key": "n", "action": "dep.create", "hidden": true},
-      {"key": "d d", "action": "dep.delete", "hidden": true},
       {"key": "r", "action": "dep.edit", "hidden": true},
       {"key": "M", "action": "dep.get", "hidden": true},
       {"key": "U", "action": "dep.history", "hidden": true},
@@ -79,9 +73,7 @@
       {"key": "p", "action": "host.yank", "hidden": true}
     ]},
     {"context": "job/normal", "bindings": [
-      {"key": "d a", "action": "job.archive", "hidden": true},
       {"key": "n", "action": "job.create", "hidden": true},
-      {"key": "d d", "action": "job.delete", "hidden": true},
       {"key": "r", "action": "job.edit", "hidden": true},
       {"key": "M", "action": "job.get", "hidden": true},
       {"key": "U", "action": "job.history", "hidden": true},
@@ -91,9 +83,7 @@
       {"key": "p", "action": "job.yank", "hidden": true}
     ]},
     {"context": "lib/normal", "bindings": [
-      {"key": "d a", "action": "lib.archive", "hidden": true},
       {"key": "n", "action": "lib.create", "hidden": true},
-      {"key": "d d", "action": "lib.delete", "hidden": true},
       {"key": "r", "action": "lib.edit", "hidden": true},
       {"key": "M", "action": "lib.get", "hidden": true},
       {"key": "U", "action": "lib.history", "hidden": true},
@@ -103,9 +93,7 @@
       {"key": "p", "action": "lib.yank", "hidden": true}
     ]},
     {"context": "noun/normal", "bindings": [
-      {"key": "d a", "action": "noun.archive", "hidden": true},
       {"key": "n", "action": "noun.create", "hidden": true},
-      {"key": "d d", "action": "noun.delete", "hidden": true},
       {"key": "r", "action": "noun.edit", "hidden": true},
       {"key": "M", "action": "noun.get", "hidden": true},
       {"key": "U", "action": "noun.history", "hidden": true},
@@ -115,21 +103,16 @@
       {"key": "p", "action": "noun.yank", "hidden": true}
     ]},
     {"context": "page/normal", "bindings": [
-      {"key": "d a", "action": "page.archive", "hidden": true},
       {"key": "n", "action": "page.create", "hidden": true},
-      {"key": "d d", "action": "page.delete", "hidden": true},
       {"key": "r", "action": "page.edit", "hidden": true},
       {"key": "M", "action": "page.get", "hidden": true},
       {"key": "U", "action": "page.history", "hidden": true},
       {"key": "m", "action": "page.list", "hidden": true},
       {"key": "*", "action": "page.set", "hidden": true},
-      {"key": "v", "action": "page.show", "hidden": true},
-      {"key": "p", "action": "page.yank", "hidden": true}
+      {"key": "v", "action": "page.show", "hidden": true}
     ]},
     {"context": "project/normal", "bindings": [
-      {"key": "d a", "action": "project.archive", "hidden": true},
       {"key": "n", "action": "project.create", "hidden": true},
-      {"key": "d d", "action": "project.delete", "hidden": true},
       {"key": "r", "action": "project.edit", "hidden": true},
       {"key": "M", "action": "project.get", "hidden": true},
       {"key": "U", "action": "project.history", "hidden": true},
@@ -151,9 +134,7 @@
       {"key": "p", "action": "story.yank", "hidden": true}
     ]},
     {"context": "table/normal", "bindings": [
-      {"key": "d a", "action": "table.archive", "hidden": true},
       {"key": "n", "action": "table.create", "hidden": true},
-      {"key": "d d", "action": "table.delete", "hidden": true},
       {"key": "r", "action": "table.edit", "hidden": true},
       {"key": "M", "action": "table.get", "hidden": true},
       {"key": "U", "action": "table.history", "hidden": true},
@@ -163,9 +144,7 @@
       {"key": "p", "action": "table.yank", "hidden": true}
     ]},
     {"context": "tool/normal", "bindings": [
-      {"key": "d a", "action": "tool.archive", "hidden": true},
       {"key": "n", "action": "tool.create", "hidden": true},
-      {"key": "d d", "action": "tool.delete", "hidden": true},
       {"key": "r", "action": "tool.edit", "hidden": true},
       {"key": "M", "action": "tool.get", "hidden": true},
       {"key": "U", "action": "tool.history", "hidden": true},
@@ -175,9 +154,7 @@
       {"key": "p", "action": "tool.yank", "hidden": true}
     ]},
     {"context": "verb/normal", "bindings": [
-      {"key": "d a", "action": "verb.archive", "hidden": true},
       {"key": "n", "action": "verb.create", "hidden": true},
-      {"key": "d d", "action": "verb.delete", "hidden": true},
       {"key": "r", "action": "verb.edit", "hidden": true},
       {"key": "M", "action": "verb.get", "hidden": true},
       {"key": "U", "action": "verb.history", "hidden": true},
